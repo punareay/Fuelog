@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DirectionsCar
@@ -32,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.fuelog.droid.data.VehicleDetails
 import com.fuelog.droid.ui.components.AutoSelectTextField
@@ -41,6 +43,7 @@ import com.fuelog.droid.ui.viewmodel.FuelViewModel
 @Composable
 fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Unit) {
     val vehicles by viewModel.vehicles.collectAsState()
+    val distanceUnit by viewModel.distanceUnit.collectAsState()
     
     // Logic: If no vehicles exist, start with the Add form. 
     // If vehicles exist, show the list for selection.
@@ -49,6 +52,7 @@ fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Un
     var plateNumber by remember { mutableStateOf("") }
     var model by remember { mutableStateOf("") }
     var year by remember { mutableStateOf("") }
+    var initialOdo by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -95,18 +99,31 @@ fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Un
                     label = { Text("Year (Optional)") },
                     modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+                AutoSelectTextField(
+                    value = initialOdo,
+                    onValueChange = { initialOdo = it },
+                    label = { Text("Initial Odometer ($distanceUnit)") },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
                     onClick = {
                         if (plateNumber.isNotBlank()) {
                             viewModel.setVehicleDetails(
-                                VehicleDetails(plateNumber, model, year)
+                                VehicleDetails(
+                                    plateNumber = plateNumber,
+                                    model = model,
+                                    year = year,
+                                    initialOdometer = initialOdo.toDoubleOrNull() ?: 0.0
+                                )
                             )
                             onVehicleSelected()
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = plateNumber.isNotBlank()
+                    enabled = plateNumber.isNotBlank() && initialOdo.isNotBlank()
                 ) {
                     Text("Save & Start")
                 }
@@ -172,13 +189,23 @@ fun VehicleItem(vehicle: VehicleDetails, onClick: () -> Unit) {
                     text = vehicle.plateNumber,
                     style = MaterialTheme.typography.titleLarge
                 )
-                if (vehicle.model.isNotBlank() || vehicle.year.isNotBlank()) {
+                val info = listOfNotNull(
+                    vehicle.model.takeIf { it.isNotBlank() },
+                    vehicle.year.takeIf { it.isNotBlank() }
+                ).joinToString(" ")
+                
+                if (info.isNotBlank()) {
                     Text(
-                        text = "${vehicle.model} ${vehicle.year}".trim(),
+                        text = info,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+                Text(
+                    text = "Initial ODO: ${vehicle.initialOdometer}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.secondary
+                )
             }
         }
     }

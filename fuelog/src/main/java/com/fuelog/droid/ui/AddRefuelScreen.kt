@@ -82,7 +82,7 @@ fun AddRefuelScreen(
     }
     var fuelType by remember { mutableStateOf(selectedEntry?.fuelType ?: "LPG") }
     var tripDistanceType by remember { mutableStateOf(selectedEntry?.tripDistanceType ?: "Trip A") }
-    var distance by remember { mutableStateOf(selectedEntry?.distance?.toString() ?: "") }
+    var odometer by remember { mutableStateOf(selectedEntry?.odometer?.toString() ?: "") }
     var fuelConsumed by remember { mutableStateOf(selectedEntry?.fuelConsumed?.toString() ?: "") }
     var fuelPrice by remember { mutableStateOf(selectedEntry?.fuelPrice?.toString() ?: "") }
     var stationName by remember { mutableStateOf(selectedEntry?.stationName ?: "") }
@@ -155,9 +155,9 @@ fun AddRefuelScreen(
 
                 // Numeric Inputs
                 AutoSelectTextField(
-                    value = distance,
-                    onValueChange = { distance = it },
-                    label = { Text("Distance ($distanceUnit)") },
+                    value = odometer,
+                    onValueChange = { odometer = it },
+                    label = { Text("Odometer Reading ($distanceUnit)") },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
@@ -204,28 +204,43 @@ fun AddRefuelScreen(
 
                 Button(
                     onClick = {
+                        val currentOdo = odometer.toDoubleOrNull() ?: 0.0
+                        val consumed = fuelConsumed.toDoubleOrNull() ?: 0.0
+                        val price = fuelPrice.toDoubleOrNull() ?: 0.0
+                        val calculatedTotal = consumed * price
+
+                        // Calculate distance from previous ODO
+                        val previousOdo = viewModel.entries.value
+                            .filter { it.vehicleType == vehicleDetails.plateNumber && it.id != selectedEntry?.id }
+                            .maxByOrNull { it.date }?.odometer ?: vehicleDetails.initialOdometer
+                        
+                        val calculatedDistance = if (currentOdo > previousOdo) currentOdo - previousOdo else 0.0
+
                         val entry = RefuelEntry(
                             id = selectedEntry?.id,
                             date = date,
                             vehicleType = vehicleDetails.plateNumber,
                             fuelType = fuelType,
                             tripDistanceType = tripDistanceType,
-                            distance = distance.toDoubleOrNull() ?: 0.0,
-                            fuelConsumed = fuelConsumed.toDoubleOrNull() ?: 0.0,
-                            fuelPrice = fuelPrice.toDoubleOrNull() ?: 0.0,
+                            distance = if (selectedEntry != null && odometer == selectedEntry?.odometer.toString()) selectedEntry!!.distance else calculatedDistance,
+                            odometer = currentOdo,
+                            fuelConsumed = consumed,
+                            fuelPrice = price,
                             stationName = stationName,
                             location = pickedAddress,
                             latitude = pickedLocation?.first,
                             longitude = pickedLocation?.second,
                             paymentOption = paymentOption,
-                            status = selectedEntry?.status ?: 1
+                            status = selectedEntry?.status ?: 1,
+                            totalPrice = calculatedTotal,
+                            isSynced = false
                         )
                         viewModel.saveEntry(entry) {
                             handleBack()
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = !isLoading && distance.isNotBlank() && fuelConsumed.isNotBlank() && fuelPrice.isNotBlank() && stationName.isNotBlank()
+                    enabled = !isLoading && odometer.isNotBlank() && fuelConsumed.isNotBlank() && fuelPrice.isNotBlank() && stationName.isNotBlank()
                 ) {
                     if (isLoading) {
                         CircularProgressIndicator(

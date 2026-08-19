@@ -1,5 +1,7 @@
+@file:OptIn(InternalSerializationApi::class)
 package com.fuelog.droid.data
 
+import kotlinx.serialization.InternalSerializationApi
 import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -44,7 +46,7 @@ class SheetsApiService {
     }
 
     // Replace with your Google Apps Script Web App URL
-    private val baseUrl = "https://script.google.com/macros/s/AKfycbzTxkctt6LnhVDdKT92obrcAe2p5uQP1wHn4s-cizd353Hl1r9QG-DjJ8yfPek4MDDE/exec"
+    private val baseUrl = "https://script.google.com/macros/s/AKfycby646bGMLtEn3BB1llyNv6pDDO48L8DKLlseiT7bmNigAuoxayD_usv1Xd4AhcfxtIo/exec"
 
     suspend fun getRefuelEntries(): List<RefuelEntry> {
         return try {

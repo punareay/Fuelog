@@ -7,4 +7,5 @@ sealed class Screen(val route: String) {
     object Settings : Screen("settings")
     object LocationPicker : Screen("location_picker")
     object VehicleSelection : Screen("vehicle_selection")
+    object HistoryMap : Screen("history_map")
 }

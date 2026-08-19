@@ -33,6 +33,7 @@ import com.fuelog.droid.ui.HistoryScreen
 import com.fuelog.droid.ui.LocationPickerScreen
 import com.fuelog.droid.ui.Screen
 import com.fuelog.droid.ui.SettingsScreen
+import com.fuelog.droid.ui.StationMapScreen
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
 import com.fuelog.droid.ui.VehicleSelectionScreen
 import android.widget.Toast
@@ -155,6 +156,11 @@ fun MainApp(viewModel: FuelViewModel) {
             }
             composable(Screen.LocationPicker.route) {
                 LocationPickerScreen(viewModel) {
+                    navController.popBackStack()
+                }
+            }
+            composable(Screen.HistoryMap.route) {
+                StationMapScreen(viewModel) {
                     navController.popBackStack()
                 }
             }
