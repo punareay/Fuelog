@@ -1,5 +1,8 @@
+@file:OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
 package com.fuelog.droid.data
 
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

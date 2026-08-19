@@ -1,5 +1,7 @@
+@file:OptIn(InternalSerializationApi::class)
 package com.fuelog.droid.data
 
+import kotlinx.serialization.InternalSerializationApi
 import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
