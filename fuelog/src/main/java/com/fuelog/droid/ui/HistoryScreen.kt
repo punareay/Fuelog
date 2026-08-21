@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
@@ -38,7 +39,7 @@ import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryScreen(viewModel: FuelViewModel, onEdit: () -> Unit) {
+fun HistoryScreen(viewModel: FuelViewModel, onMapClick: () -> Unit, onEdit: () -> Unit) {
     val rawEntries by viewModel.filteredEntries.collectAsState(initial = emptyList())
     val entries = remember(rawEntries) {
         rawEntries.sortedWith(compareByDescending<RefuelEntry> { it.date }.thenByDescending { it.id })
@@ -53,6 +54,9 @@ fun HistoryScreen(viewModel: FuelViewModel, onEdit: () -> Unit) {
             TopAppBar(
                 title = { Text("Refuel History") },
                 actions = {
+                    IconButton(onClick = onMapClick) {
+                        Icon(Icons.Default.Map, contentDescription = "View Map")
+                    }
                     if (isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier

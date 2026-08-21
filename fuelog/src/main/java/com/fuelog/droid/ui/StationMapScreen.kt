@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fuelog.droid.data.RefuelEntry
+import com.fuelog.droid.ui.components.formatRiel
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -60,11 +61,7 @@ fun StationMapScreen(viewModel: FuelViewModel, onBack: () -> Unit) {
                 Marker(
                     state = MarkerState(position = position),
                     title = first.stationName.ifBlank { "Unknown Station" },
-                    snippet = "${stationEntries.size} entries here",
-                    onClick = {
-                        // Optional: Show details
-                        false
-                    }
+                    snippet = "${stationEntries.size} refuels • Total: ${formatRiel(stationEntries.sumOf { it.totalCost })}"
                 )
             }
         }

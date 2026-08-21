@@ -129,7 +129,9 @@ fun MainApp(viewModel: FuelViewModel) {
                 }
             }
             composable(Screen.History.route) {
-                HistoryScreen(viewModel) {
+                HistoryScreen(viewModel, {
+                    navController.navigate(Screen.HistoryMap.route)
+                }) {
                     navController.navigate(Screen.AddRefuel.route)
                 }
             }
