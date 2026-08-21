@@ -78,15 +78,26 @@ fun StationMapScreen(viewModel: FuelViewModel, onBack: () -> Unit) {
 
     // Function to zoom to all pins
     fun zoomToAllPins() {
-        if (stations.isNotEmpty()) {
-            val builder = LatLngBounds.Builder()
-            stations.forEach { (_, stationEntries) ->
-                val first = stationEntries.first()
-                builder.include(LatLng(first.latitude!!, first.longitude!!))
-            }
-            val bounds = builder.build()
-            scope.launch {
-                cameraPositionState.animate(CameraUpdateFactory.newLatLngBounds(bounds, 150))
+        if (stations.isEmpty()) return
+        
+        val builder = LatLngBounds.Builder()
+        stations.forEach { (_, stationEntries) ->
+            val first = stationEntries.first()
+            builder.include(LatLng(first.latitude!!, first.longitude!!))
+        }
+        val bounds = builder.build()
+        
+        scope.launch {
+            if (stations.size == 1) {
+                // If only one station, just zoom to it specifically
+                cameraPositionState.animate(
+                    CameraUpdateFactory.newLatLngZoom(bounds.center, 15f)
+                )
+            } else {
+                // Zoom to fit all stations with padding
+                cameraPositionState.animate(
+                    CameraUpdateFactory.newLatLngBounds(bounds, 150)
+                )
             }
         }
     }
