@@ -52,6 +52,9 @@
     <string name="liters">លីត្រ (L)</string>
     <string name="gallons">ហ្គាឡុង (gal)</string>
     <string name="switch_add_vehicle">ប្តូរ / បន្ថែមយានយន្ត</string>
+    <string name="language">ភាសា</string>
+    <string name="english">អង់គ្លេស</string>
+    <string name="khmer">ខ្មែរ</string>
 
     <string name="vehicle_setup_title">ការកំណត់យានយន្ត</string>
     <string name="add_new_vehicle">បន្ថែមយានយន្តថ្មី</string>

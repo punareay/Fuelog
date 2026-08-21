@@ -42,6 +42,7 @@ fun SettingsScreen(
 ) {
     val currentDistanceUnit by viewModel.distanceUnit.collectAsState()
     val currentVolumeUnit by viewModel.volumeUnit.collectAsState()
+    val currentLanguage by viewModel.language.collectAsState()
     val currentVehicleDetails by viewModel.vehicleDetails.collectAsState()
 
     var plateNumber by remember { mutableStateOf(currentVehicleDetails.plateNumber) }
@@ -49,6 +50,7 @@ fun SettingsScreen(
     var year by remember { mutableStateOf(currentVehicleDetails.year) }
     var distanceUnit by remember { mutableStateOf(currentDistanceUnit) }
     var volumeUnit by remember { mutableStateOf(currentVolumeUnit) }
+    var language by remember { mutableStateOf(currentLanguage) }
 
     Scaffold(
         topBar = {
@@ -133,6 +135,28 @@ fun SettingsScreen(
                 Text(stringResource(R.string.gallons))
             }
 
+            Divider(modifier = Modifier.padding(vertical = 24.dp))
+
+            Text(
+                text = stringResource(R.string.language),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = language == "en",
+                    onClick = { language = "en" }
+                )
+                Text(stringResource(R.string.english))
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                RadioButton(
+                    selected = language == "km",
+                    onClick = { language = "km" }
+                )
+                Text(stringResource(R.string.khmer))
+            }
+
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
@@ -158,6 +182,7 @@ fun SettingsScreen(
                     )
                     viewModel.setDistanceUnit(distanceUnit)
                     viewModel.setVolumeUnit(volumeUnit)
+                    viewModel.setLanguage(language)
                     onBack()
                 },
                 modifier = Modifier.fillMaxWidth()

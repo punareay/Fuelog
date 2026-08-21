@@ -52,6 +52,9 @@
     <string name="liters">Liters (L)</string>
     <string name="gallons">Gallons (gal)</string>
     <string name="switch_add_vehicle">Switch / Add Vehicle</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="khmer">Khmer</string>
 
     <string name="vehicle_setup_title">Vehicle Setup</string>
     <string name="add_new_vehicle">Add New Vehicle</string>

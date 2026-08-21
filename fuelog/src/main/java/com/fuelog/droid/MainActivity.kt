@@ -37,12 +37,21 @@ import com.fuelog.droid.ui.SettingsScreen
 import com.fuelog.droid.ui.StationMapScreen
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
 import com.fuelog.droid.ui.VehicleSelectionScreen
+import com.fuelog.droid.utils.LocaleUtils
 import android.widget.Toast
+import android.content.Context
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.flow.collectLatest
 
 class MainActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        val sm = SettingsManager(newBase)
+        val lang = sm.getLanguage()
+        super.attachBaseContext(LocaleUtils.wrap(newBase, lang))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -64,6 +73,14 @@ class MainActivity : ComponentActivity() {
 fun MainApp(viewModel: FuelViewModel) {
     val context = LocalContext.current
     val selectedPlate by viewModel.selectedPlateNumber.collectAsState()
+    val language by viewModel.language.collectAsState()
+
+    LaunchedEffect(language) {
+        val currentLang = context.resources.configuration.locales[0].language
+        if (currentLang != language) {
+            (context as? MainActivity)?.recreate()
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.toastMessage.collectLatest { message ->

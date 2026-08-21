@@ -61,6 +61,9 @@ class FuelViewModel(
     private val _volumeUnit = MutableStateFlow(settingsManager.getVolumeUnit())
     val volumeUnit: StateFlow<String> = _volumeUnit.asStateFlow()
 
+    private val _language = MutableStateFlow(settingsManager.getLanguage())
+    val language: StateFlow<String> = _language.asStateFlow()
+
     private val _selectedEntry = MutableStateFlow<RefuelEntry?>(null)
     val selectedEntry: StateFlow<RefuelEntry?> = _selectedEntry.asStateFlow()
 
@@ -237,6 +240,11 @@ class FuelViewModel(
     fun setVolumeUnit(unit: String) {
         settingsManager.setVolumeUnit(unit)
         _volumeUnit.value = unit
+    }
+
+    fun setLanguage(lang: String) {
+        settingsManager.setLanguage(lang)
+        _language.value = lang
     }
 
     fun setVehicleDetails(details: VehicleDetails) {

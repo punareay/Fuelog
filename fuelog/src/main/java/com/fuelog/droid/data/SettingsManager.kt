@@ -26,11 +26,19 @@ class SettingsManager(context: Context) {
         prefs.edit { putString("volume_unit", unit) }
     }
 
+    fun getLanguage(): String {
+        return prefs.getString("app_language", "en") ?: "en"
+    }
+
+    fun setLanguage(lang: String) {
+        prefs.edit { putString("app_language", lang) }
+    }
+
     fun getVehicles(): List<VehicleDetails> {
         val jsonString = prefs.getString("vehicles_list", null) ?: return emptyList()
         return try {
             json.decodeFromString<List<VehicleDetails>>(jsonString)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             emptyList()
         }
     }
@@ -68,7 +76,7 @@ class SettingsManager(context: Context) {
         val jsonString = prefs.getString("cached_entries", null) ?: return emptyList()
         return try {
             json.decodeFromString<List<RefuelEntry>>(jsonString)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             emptyList()
         }
     }
