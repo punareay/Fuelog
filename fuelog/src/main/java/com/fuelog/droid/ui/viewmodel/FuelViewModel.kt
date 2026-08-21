@@ -45,6 +45,12 @@ class FuelViewModel(
         if (plate == null) list else list.filter { it.vehicleType == plate }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val stations: StateFlow<List<RefuelEntry>> = allEntries.map { list ->
+        list.filter { it.stationName.isNotBlank() && it.latitude != null && it.longitude != null }
+            .groupBy { it.stationName.trim().lowercase() }
+            .map { it.value.maxBy { entry -> entry.date } }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val vehicleDetails: StateFlow<VehicleDetails> = combine(vehicles, _selectedPlateNumber) { list, plate ->
         list.find { it.plateNumber == plate } ?: settingsManager.getVehicleDetails()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), settingsManager.getVehicleDetails())

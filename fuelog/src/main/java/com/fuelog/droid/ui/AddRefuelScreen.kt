@@ -1,47 +1,20 @@
 package com.fuelog.droid.ui
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.res.stringResource
 import com.fuelog.droid.R
 import com.fuelog.droid.data.RefuelEntry
 import com.fuelog.droid.ui.components.AutoSelectTextField
@@ -65,18 +38,18 @@ fun AddRefuelScreen(
     val pickedLocation by viewModel.pickedLocation.collectAsState()
     val pickedAddress by viewModel.pickedAddress.collectAsState()
     val vehicleDetails by viewModel.vehicleDetails.collectAsState()
+    val existingStations by viewModel.stations.collectAsState()
 
     var date by remember {
         val initialDate = selectedEntry?.date?.let { rawDate ->
             try {
-                // Try parsing ISO format: 2026-03-10T06:49:00.000Z
                 val isoFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply {
                     timeZone = TimeZone.getTimeZone("UTC")
                 }
-                val date = isoFormat.parse(rawDate)
-                SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(date!!)
+                val dateObj = isoFormat.parse(rawDate)
+                SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(dateObj!!)
             } catch (_: Exception) {
-                rawDate // Fallback if parsing fails
+                rawDate
             }
         } ?: SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
         
@@ -129,7 +102,7 @@ fun AddRefuelScreen(
                     trailingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) }
                 )
 
-                // Vehicle Info (ReadOnly display of plate from settings)
+                // Vehicle Info
                 AutoSelectTextField(
                     value = vehicleDetails.plateNumber,
                     onValueChange = { },
@@ -180,13 +153,57 @@ fun AddRefuelScreen(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
 
-                // Text Inputs
-                AutoSelectTextField(
-                    value = stationName,
-                    onValueChange = { stationName = it },
-                    label = { Text(stringResource(R.string.station_name)) },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                // Station Name with Autocomplete
+                var stationExpanded by remember { mutableStateOf(false) }
+                val filteredStations = remember(stationName, existingStations) {
+                    if (stationName.isBlank()) emptyList()
+                    else existingStations.filter { 
+                        it.stationName.contains(stationName, ignoreCase = true) 
+                    }
+                }
+
+                ExposedDropdownMenuBox(
+                    expanded = stationExpanded && filteredStations.isNotEmpty(),
+                    onExpandedChange = { stationExpanded = it }
+                ) {
+                    AutoSelectTextField(
+                        value = stationName,
+                        onValueChange = { 
+                            stationName = it
+                            stationExpanded = true
+                        },
+                        label = { Text(stringResource(R.string.station_name)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                    )
+                    
+                    ExposedDropdownMenu(
+                        expanded = stationExpanded && filteredStations.isNotEmpty(),
+                        onDismissRequest = { stationExpanded = false }
+                    ) {
+                        filteredStations.forEach { entry ->
+                            DropdownMenuItem(
+                                text = { 
+                                    Column {
+                                        Text(entry.stationName)
+                                        entry.location?.let { 
+                                            Text(it, style = MaterialTheme.typography.labelSmall, maxLines = 1) 
+                                        }
+                                    }
+                                },
+                                onClick = {
+                                    stationName = entry.stationName
+                                    stationExpanded = false
+                                    // Auto-fill location
+                                    if (entry.latitude != null && entry.longitude != null) {
+                                        viewModel.pickLocation(entry.latitude, entry.longitude, entry.location)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
 
                 Box(modifier = Modifier.fillMaxWidth().clickable { onPickLocation() }) {
                     AutoSelectTextField(
@@ -211,7 +228,6 @@ fun AddRefuelScreen(
                         val price = fuelPrice.toDoubleOrNull() ?: 0.0
                         val calculatedTotal = consumed * price
 
-                        // Calculate distance from previous ODO
                         val previousOdo = viewModel.entries.value
                             .filter { it.vehicleType == vehicleDetails.plateNumber && it.id != selectedEntry?.id }
                             .maxByOrNull { it.date }?.odometer ?: vehicleDetails.initialOdometer
