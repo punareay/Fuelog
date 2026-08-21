@@ -151,11 +151,8 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
                         label = {
                             val labelRes = when (filter) {
                                 ReportFilter.ALL -> R.string.filter_all
-                                ReportFilter.WEEKLY -> R.string.filter_weekly
-                                ReportFilter.MONTHLY -> R.string.filter_monthly
-                                ReportFilter.QUARTERLY -> R.string.filter_quarterly
-                                ReportFilter.SEMESTER -> R.string.filter_semester
-                                ReportFilter.YEARLY -> R.string.filter_yearly
+                                ReportFilter.THIS_WEEK -> R.string.filter_this_week
+                                ReportFilter.THIS_MONTH -> R.string.filter_this_month
                                 ReportFilter.CUSTOM -> R.string.filter_custom
                             }
                             Text(stringResource(labelRes))

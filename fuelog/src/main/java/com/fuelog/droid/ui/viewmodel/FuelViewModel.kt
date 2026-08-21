@@ -23,7 +23,7 @@ import java.util.Locale
 import java.util.TimeZone
 
 enum class ReportFilter {
-    ALL, WEEKLY, MONTHLY, QUARTERLY, SEMESTER, YEARLY, CUSTOM
+    ALL, THIS_WEEK, THIS_MONTH, CUSTOM
 }
 
 class FuelViewModel(
@@ -103,24 +103,26 @@ class FuelViewModel(
         val now = calendar.timeInMillis
         
         val startTime: Long = when (filter) {
-            ReportFilter.WEEKLY -> {
-                calendar.add(Calendar.WEEK_OF_YEAR, -1)
+            ReportFilter.THIS_WEEK -> {
+                // Set to Monday of this week
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
+                // If today is Sunday, calendar.set(DAY_OF_WEEK, MONDAY) might go to next Monday 
+                // depending on locale, so we adjust.
+                if (System.currentTimeMillis() < calendar.timeInMillis) {
+                    calendar.add(Calendar.DAY_OF_YEAR, -7)
+                }
                 calendar.timeInMillis
             }
-            ReportFilter.MONTHLY -> {
-                calendar.add(Calendar.MONTH, -1)
-                calendar.timeInMillis
-            }
-            ReportFilter.QUARTERLY -> {
-                calendar.add(Calendar.MONTH, -3)
-                calendar.timeInMillis
-            }
-            ReportFilter.SEMESTER -> {
-                calendar.add(Calendar.MONTH, -6)
-                calendar.timeInMillis
-            }
-            ReportFilter.YEARLY -> {
-                calendar.add(Calendar.YEAR, -1)
+            ReportFilter.THIS_MONTH -> {
+                calendar.set(Calendar.DAY_OF_MONTH, 1)
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
                 calendar.timeInMillis
             }
             ReportFilter.CUSTOM -> customRange?.first ?: 0L

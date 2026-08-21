@@ -69,11 +69,8 @@
     <string name="refuels_count">%1$d refuels • Total: %2$s</string>
 
     <string name="filter_all">All</string>
-    <string name="filter_weekly">Weekly</string>
-    <string name="filter_monthly">Monthly</string>
-    <string name="filter_quarterly">Quarterly</string>
-    <string name="filter_semester">Semester</string>
-    <string name="filter_yearly">Yearly</string>
+    <string name="filter_this_week">This Week</string>
+    <string name="filter_this_month">This Month</string>
     <string name="filter_custom">Custom</string>
 
     <string name="nav_dashboard">Dashboard</string>

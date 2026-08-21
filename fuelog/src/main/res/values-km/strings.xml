@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Fuelog</string>
-    <string name="dashboard_title">តារាងគ្រប់គ្រង</string>
-    <string name="vehicle_identity">អត្តសញ្ញាណយានយន្ត</string>
+    <string name="dashboard_title">របាយការណ៍សង្ខេប</string>
+    <string name="vehicle_identity">អំពីយានយន្ត</string>
     <string name="plate_label">ស្លាកលេខ: %1$s</string>
     <string name="model_label">ម៉ូដែល: %1$s</string>
     <string name="year_label">ឆ្នាំ: %1$s</string>
     <string name="report_range">របាយការណ៍តាមកាលបរិច្ឆេទ</string>
     <string name="total_fuel_expense">ការចំណាយប្រេងសរុប</string>
-    <string name="filtered_records">ទិន្នន័យដែលបានត្រង: %1$d</string>
+    <string name="filtered_records">ចំនួនចាក់ឥន្ធនៈសរុប: %1$d</string>
     <string name="add_record">បន្ថែមទិន្នន័យ</string>
     <string name="sync">ធ្វើបច្ចុប្បន្នភាព</string>
     <string name="my_location">ទីតាំងរបស់ខ្ញុំ</string>
@@ -30,14 +30,14 @@
     <string name="edit_refuel_title">កែសម្រួលប្រវត្តិការចាក់ប្រេង</string>
     <string name="date">កាលបរិច្ឆេទ</string>
     <string name="vehicle_plate_settings">ស្លាកលេខយានយន្ត (ពីការកំណត់)</string>
-    <string name="fuel_type">ប្រភេទប្រេង</string>
+    <string name="fuel_type">ប្រភេទឥន្ធនៈ</string>
     <string name="trip_type">ប្រភេទ Trip</string>
     <string name="odometer_reading">លេខគីឡូម៉ែត្រ (%1$s)</string>
     <string name="fuel_consumed">បរិមាណប្រេង (%1$s)</string>
     <string name="fuel_price">តម្លៃប្រេង (៛/%1$s)</string>
     <string name="station_name">ឈ្មោះស្ថានីយ</string>
-    <string name="location_tap">ទីតាំង (ចុចដើម្បីជ្រើសរើស)</string>
-    <string name="payment_option">ជម្រើសទូទាត់</string>
+    <string name="location_tap">ទីតាំងផែនទី (ចុចដើម្បីជ្រើសរើស)</string>
+    <string name="payment_option">ទូទាត់ដោយ៖</string>
     <string name="save">រក្សាទុក</string>
     <string name="update">កែសម្រួល</string>
 
@@ -69,11 +69,8 @@
     <string name="refuels_count">ចាក់ប្រេង %1$d ដង • សរុប: %2$s</string>
 
     <string name="filter_all">ទាំងអស់</string>
-    <string name="filter_weekly">ប្រចាំសប្តាហ៍</string>
-    <string name="filter_monthly">ប្រចាំខែ</string>
-    <string name="filter_quarterly">ប្រចាំត្រីមាស</string>
-    <string name="filter_semester">ប្រចាំឆមាស</string>
-    <string name="filter_yearly">ប្រចាំឆ្នាំ</string>
+    <string name="filter_this_week">សប្តាហ៍នេះ</string>
+    <string name="filter_this_month">ខែនេះ</string>
     <string name="filter_custom">តាមតម្រូវការ</string>
 
     <string name="nav_dashboard">តារាង</string>
