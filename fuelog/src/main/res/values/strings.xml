@@ -1,3 +1,79 @@
 <resources>
     <string name="app_name">Fuelog</string>
+    <string name="dashboard_title">Fuelog Dashboard</string>
+    <string name="vehicle_identity">Vehicle Identity</string>
+    <string name="plate_label">Plate: %1$s</string>
+    <string name="model_label">Model: %1$s</string>
+    <string name="year_label">Year: %1$s</string>
+    <string name="report_range">Report Range</string>
+    <string name="total_fuel_expense">Total Fuel Expense</string>
+    <string name="filtered_records">Filtered Records: %1$d</string>
+    <string name="add_record">Add Record</string>
+    <string name="sync">Sync</string>
+    <string name="my_location">My Location</string>
+    <string name="view_all_pins">View All Pins</string>
+    <string name="back">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_date_range">Select Date Range</string>
+
+    <string name="history_title">Refuel History</string>
+    <string name="delete_entry">Delete Entry</string>
+    <string name="delete_confirmation">Are you sure you want to delete this record?</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="unsynced">Unsynced</string>
+    <string name="station_label">Station: %1$s</string>
+    <string name="consumed_label">Consumed: %1$s%2$s @ %3$s/%2$s</string>
+
+    <string name="add_refuel_title">Add Refuel Record</string>
+    <string name="edit_refuel_title">Edit Refuel Record</string>
+    <string name="date">Date</string>
+    <string name="vehicle_plate_settings">Vehicle Plate (from Settings)</string>
+    <string name="fuel_type">Fuel Type</string>
+    <string name="trip_type">Trip Type</string>
+    <string name="odometer_reading">Odometer Reading (%1$s)</string>
+    <string name="fuel_consumed">Fuel Consumed (%1$s)</string>
+    <string name="fuel_price">Fuel Price (៛/%1$s)</string>
+    <string name="station_name">Station Name</string>
+    <string name="location_tap">Location (Tap to select)</string>
+    <string name="payment_option">Payment Option</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="plate_number">Plate Number</string>
+    <string name="model">Model</string>
+    <string name="year">Year</string>
+    <string name="distance_unit">Distance Unit</string>
+    <string name="volume_unit">Volume Unit</string>
+    <string name="km">Kilometers (km)</string>
+    <string name="miles">Miles (miles)</string>
+    <string name="liters">Liters (L)</string>
+    <string name="gallons">Gallons (gal)</string>
+    <string name="switch_add_vehicle">Switch / Add Vehicle</string>
+
+    <string name="vehicle_setup_title">Vehicle Setup</string>
+    <string name="add_new_vehicle">Add New Vehicle</string>
+    <string name="initial_odometer">Initial Odometer (%1$s)</string>
+    <string name="save_start">Save &amp; Start</string>
+    <string name="back_to_list">Back to List</string>
+    <string name="select_existing_vehicle">Select an existing vehicle:</string>
+    <string name="add_vehicle">Add Vehicle</string>
+    <string name="initial_odo_label">Initial ODO: %1$s</string>
+
+    <string name="station_map_title">Station Map</string>
+    <string name="refuels_count">%1$d refuels • Total: %2$s</string>
+
+    <string name="filter_all">All</string>
+    <string name="filter_weekly">Weekly</string>
+    <string name="filter_monthly">Monthly</string>
+    <string name="filter_quarterly">Quarterly</string>
+    <string name="filter_semester">Semester</string>
+    <string name="filter_yearly">Yearly</string>
+    <string name="filter_custom">Custom</string>
+
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
 </resources>

@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Fuelog</string>
+    <string name="dashboard_title">តារាងគ្រប់គ្រង</string>
+    <string name="vehicle_identity">អត្តសញ្ញាណយានយន្ត</string>
+    <string name="plate_label">ស្លាកលេខ: %1$s</string>
+    <string name="model_label">ម៉ូដែល: %1$s</string>
+    <string name="year_label">ឆ្នាំ: %1$s</string>
+    <string name="report_range">របាយការណ៍តាមកាលបរិច្ឆេទ</string>
+    <string name="total_fuel_expense">ការចំណាយប្រេងសរុប</string>
+    <string name="filtered_records">ទិន្នន័យដែលបានត្រង: %1$d</string>
+    <string name="add_record">បន្ថែមទិន្នន័យ</string>
+    <string name="sync">ធ្វើបច្ចុប្បន្នភាព</string>
+    <string name="my_location">ទីតាំងរបស់ខ្ញុំ</string>
+    <string name="view_all_pins">បង្ហាញទីតាំងទាំងអស់</string>
+    <string name="back">ត្រឡប់ក្រោយ</string>
+    <string name="confirm">យល់ព្រម</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="select_date_range">ជ្រើសរើសកាលបរិច្ឆេទ</string>
+
+    <string name="history_title">ប្រវត្តិការចាក់ប្រេង</string>
+    <string name="delete_entry">លុបទិន្នន័យ</string>
+    <string name="delete_confirmation">តើអ្នកពិតជាចង់លុបទិន្នន័យនេះមែនទេ?</string>
+    <string name="delete">លុប</string>
+    <string name="edit">កែសម្រួល</string>
+    <string name="unsynced">មិនទាន់ស៊ីគ្នា</string>
+    <string name="station_label">ស្ថានីយ: %1$s</string>
+    <string name="consumed_label">ប្រើអស់: %1$s%2$s @ %3$s/%2$s</string>
+
+    <string name="add_refuel_title">បន្ថែមប្រវត្តិការចាក់ប្រេង</string>
+    <string name="edit_refuel_title">កែសម្រួលប្រវត្តិការចាក់ប្រេង</string>
+    <string name="date">កាលបរិច្ឆេទ</string>
+    <string name="vehicle_plate_settings">ស្លាកលេខយានយន្ត (ពីការកំណត់)</string>
+    <string name="fuel_type">ប្រភេទប្រេង</string>
+    <string name="trip_type">ប្រភេទ Trip</string>
+    <string name="odometer_reading">លេខគីឡូម៉ែត្រ (%1$s)</string>
+    <string name="fuel_consumed">បរិមាណប្រេង (%1$s)</string>
+    <string name="fuel_price">តម្លៃប្រេង (៛/%1$s)</string>
+    <string name="station_name">ឈ្មោះស្ថានីយ</string>
+    <string name="location_tap">ទីតាំង (ចុចដើម្បីជ្រើសរើស)</string>
+    <string name="payment_option">ជម្រើសទូទាត់</string>
+    <string name="save">រក្សាទុក</string>
+    <string name="update">កែសម្រួល</string>
+
+    <string name="settings_title">ការកំណត់</string>
+    <string name="plate_number">ស្លាកលេខ</string>
+    <string name="model">ម៉ូដែល</string>
+    <string name="year">ឆ្នាំ</string>
+    <string name="distance_unit">ឯកតាចម្ងាយ</string>
+    <string name="volume_unit">ឯកតាចំណុះ</string>
+    <string name="km">គីឡូម៉ែត្រ (km)</string>
+    <string name="miles">ម៉ាយ (miles)</string>
+    <string name="liters">លីត្រ (L)</string>
+    <string name="gallons">ហ្គាឡុង (gal)</string>
+    <string name="switch_add_vehicle">ប្តូរ / បន្ថែមយានយន្ត</string>
+
+    <string name="vehicle_setup_title">ការកំណត់យានយន្ត</string>
+    <string name="add_new_vehicle">បន្ថែមយានយន្តថ្មី</string>
+    <string name="initial_odometer">លេខគីឡូម៉ែត្រដំបូង (%1$s)</string>
+    <string name="save_start">រក្សាទុក និងចាប់ផ្តើម</string>
+    <string name="back_to_list">ត្រឡប់ទៅបញ្ជី</string>
+    <string name="select_existing_vehicle">ជ្រើសរើសយានយន្តដែលមានស្រាប់:</string>
+    <string name="add_vehicle">បន្ថែមយានយន្ត</string>
+    <string name="initial_odo_label">គីឡូម៉ែត្រដំបូង: %1$s</string>
+
+    <string name="station_map_title">ផែនទីស្ថានីយ</string>
+    <string name="refuels_count">ចាក់ប្រេង %1$d ដង • សរុប: %2$s</string>
+
+    <string name="filter_all">ទាំងអស់</string>
+    <string name="filter_weekly">ប្រចាំសប្តាហ៍</string>
+    <string name="filter_monthly">ប្រចាំខែ</string>
+    <string name="filter_quarterly">ប្រចាំត្រីមាស</string>
+    <string name="filter_semester">ប្រចាំឆមាស</string>
+    <string name="filter_yearly">ប្រចាំឆ្នាំ</string>
+    <string name="filter_custom">តាមតម្រូវការ</string>
+
+    <string name="nav_dashboard">តារាង</string>
+    <string name="nav_history">ប្រវត្តិ</string>
+    <string name="nav_settings">កំណត់</string>
+</resources>

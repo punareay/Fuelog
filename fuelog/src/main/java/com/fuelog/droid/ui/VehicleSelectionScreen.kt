@@ -35,6 +35,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.fuelog.droid.R
 import com.fuelog.droid.data.VehicleDetails
 import com.fuelog.droid.ui.components.AutoSelectTextField
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
@@ -56,13 +58,13 @@ fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Un
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Vehicle Setup") })
+            TopAppBar(title = { Text(stringResource(R.string.vehicle_setup_title)) })
         },
         floatingActionButton = {
             // Only show add button if we are currently looking at the list
             if (!showAddForm && vehicles.isNotEmpty()) {
                 FloatingActionButton(onClick = { showAddForm = true }) {
-                    Icon(Icons.Default.Add, contentDescription = "Add Vehicle")
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_vehicle))
                 }
             }
         }
@@ -75,35 +77,35 @@ fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Un
         ) {
             if (showAddForm) {
                 Text(
-                    text = "Add New Vehicle",
+                    text = stringResource(R.string.add_new_vehicle),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
                 AutoSelectTextField(
                     value = plateNumber,
                     onValueChange = { plateNumber = it },
-                    label = { Text("Plate Number") },
+                    label = { Text(stringResource(R.string.plate_number)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 AutoSelectTextField(
                     value = model,
                     onValueChange = { model = it },
-                    label = { Text("Model (Optional)") },
+                    label = { Text(stringResource(R.string.model)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 AutoSelectTextField(
                     value = year,
                     onValueChange = { year = it },
-                    label = { Text("Year (Optional)") },
+                    label = { Text(stringResource(R.string.year)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 AutoSelectTextField(
                     value = initialOdo,
                     onValueChange = { initialOdo = it },
-                    label = { Text("Initial Odometer ($distanceUnit)") },
+                    label = { Text(stringResource(R.string.initial_odometer, distanceUnit)) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
@@ -125,7 +127,7 @@ fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Un
                     modifier = Modifier.fillMaxWidth(),
                     enabled = plateNumber.isNotBlank() && initialOdo.isNotBlank()
                 ) {
-                    Text("Save & Start")
+                    Text(stringResource(R.string.save_start))
                 }
                 
                 if (vehicles.isNotEmpty()) {
@@ -135,12 +137,12 @@ fun VehicleSelectionScreen(viewModel: FuelViewModel, onVehicleSelected: () -> Un
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.filledTonalButtonColors()
                     ) {
-                        Text("Back to List")
+                        Text(stringResource(R.string.back_to_list))
                     }
                 }
             } else {
                 Text(
-                    text = "Select an existing vehicle:",
+                    text = stringResource(R.string.select_existing_vehicle),
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
@@ -202,7 +204,7 @@ fun VehicleItem(vehicle: VehicleDetails, onClick: () -> Unit) {
                     )
                 }
                 Text(
-                    text = "Initial ODO: ${vehicle.initialOdometer}",
+                    text = stringResource(R.string.initial_odo_label, vehicle.initialOdometer.toString()),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.secondary
                 )

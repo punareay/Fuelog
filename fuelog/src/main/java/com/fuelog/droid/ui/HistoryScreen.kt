@@ -30,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.fuelog.droid.R
 import com.fuelog.droid.data.RefuelEntry
 import com.fuelog.droid.ui.components.formatRiel
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
@@ -52,10 +54,10 @@ fun HistoryScreen(viewModel: FuelViewModel, onMapClick: () -> Unit, onEdit: () -
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Refuel History") },
+                title = { Text(stringResource(R.string.history_title)) },
                 actions = {
                     IconButton(onClick = onMapClick) {
-                        Icon(Icons.Default.Map, contentDescription = "View Map")
+                        Icon(Icons.Default.Map, contentDescription = stringResource(R.string.station_map_title))
                     }
                     if (isLoading) {
                         CircularProgressIndicator(
@@ -66,7 +68,7 @@ fun HistoryScreen(viewModel: FuelViewModel, onMapClick: () -> Unit, onEdit: () -
                         )
                     } else {
                         IconButton(onClick = { viewModel.refresh() }) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Sync")
+                            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.sync))
                         }
                     }
                 }
@@ -96,8 +98,8 @@ fun HistoryScreen(viewModel: FuelViewModel, onMapClick: () -> Unit, onEdit: () -
         entryToDelete?.let { entry ->
             AlertDialog(
                 onDismissRequest = { entryToDelete = null },
-                title = { Text("Delete Entry") },
-                text = { Text("Are you sure you want to delete this record?") },
+                title = { Text(stringResource(R.string.delete_entry)) },
+                text = { Text(stringResource(R.string.delete_confirmation)) },
                 confirmButton = {
                     TextButton(
                         onClick = {
@@ -105,12 +107,12 @@ fun HistoryScreen(viewModel: FuelViewModel, onMapClick: () -> Unit, onEdit: () -
                             entryToDelete = null
                         }
                     ) {
-                        Text("Delete")
+                        Text(stringResource(R.string.delete))
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { entryToDelete = null }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel))
                     }
                 }
             )
@@ -132,7 +134,7 @@ fun HistoryItem(
             }
             val date = isoFormat.parse(entry.date)
             SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(date!!)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             entry.date
         }
     }
@@ -159,18 +161,18 @@ fun HistoryItem(
                 Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                     if (!entry.isSynced) {
                         Text(
-                            text = "Unsynced",
+                            text = stringResource(R.string.unsynced),
                             fontSize = 10.sp,
                             color = MaterialTheme.colorScheme.error,
                             modifier = Modifier.padding(end = 4.dp)
                         )
                     }
                     IconButton(onClick = onEdit, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.Default.Edit, contentDescription = "Edit", tint = MaterialTheme.colorScheme.primary)
+                        Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit), tint = MaterialTheme.colorScheme.primary)
                     }
                     Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                     IconButton(onClick = onDelete, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
+                        Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.error)
                     }
                 }
             }
@@ -182,7 +184,11 @@ fun HistoryItem(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = "${entry.vehicleType} - ${entry.fuelType}", fontSize = 14.sp)
-                    val stationDisplay = if (entry.stationName.length > 16) "Station:\n${entry.stationName}" else "Station: ${entry.stationName}"
+                    val stationDisplay = if (entry.stationName.length > 16) {
+                        stringResource(R.string.station_label, "\n${entry.stationName}")
+                    } else {
+                        stringResource(R.string.station_label, entry.stationName)
+                    }
                     Text(text = stationDisplay, fontSize = 14.sp)
                 }
                 Text(
@@ -194,7 +200,12 @@ fun HistoryItem(
                 )
             }
             Text(
-                text = "Consumed: ${entry.fuelConsumed}$volumeUnit @ ${formatRiel(entry.fuelPrice)}/$volumeUnit",
+                text = stringResource(
+                    R.string.consumed_label,
+                    entry.fuelConsumed,
+                    volumeUnit,
+                    formatRiel(entry.fuelPrice)
+                ),
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.secondary
             )

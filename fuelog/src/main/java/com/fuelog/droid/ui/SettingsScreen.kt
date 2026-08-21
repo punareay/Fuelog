@@ -27,6 +27,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.fuelog.droid.R
 import com.fuelog.droid.data.VehicleDetails
 import com.fuelog.droid.ui.components.AutoSelectTextField
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
@@ -50,7 +52,7 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Settings") })
+            TopAppBar(title = { Text(stringResource(R.string.settings_title)) })
         }
     ) { padding ->
         Column(
@@ -61,7 +63,7 @@ fun SettingsScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Vehicle Identity",
+                text = stringResource(R.string.vehicle_identity),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -69,28 +71,28 @@ fun SettingsScreen(
             AutoSelectTextField(
                 value = plateNumber,
                 onValueChange = { plateNumber = it },
-                label = { Text("Plate Number") },
+                label = { Text(stringResource(R.string.plate_number)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
             AutoSelectTextField(
                 value = model,
                 onValueChange = { model = it },
-                label = { Text("Model") },
+                label = { Text(stringResource(R.string.model)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
             AutoSelectTextField(
                 value = year,
                 onValueChange = { year = it },
-                label = { Text("Year") },
+                label = { Text(stringResource(R.string.year)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Divider(modifier = Modifier.padding(vertical = 24.dp))
 
             Text(
-                text = "Distance Unit",
+                text = stringResource(R.string.distance_unit),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -100,19 +102,19 @@ fun SettingsScreen(
                     selected = distanceUnit == "km",
                     onClick = { distanceUnit = "km" }
                 )
-                Text("Kilometers (km)")
+                Text(stringResource(R.string.km))
                 Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                 RadioButton(
                     selected = distanceUnit == "miles",
                     onClick = { distanceUnit = "miles" }
                 )
-                Text("Miles (miles)")
+                Text(stringResource(R.string.miles))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Volume Unit",
+                text = stringResource(R.string.volume_unit),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -122,13 +124,13 @@ fun SettingsScreen(
                     selected = volumeUnit == "L",
                     onClick = { volumeUnit = "L" }
                 )
-                Text("Liters (L)")
+                Text(stringResource(R.string.liters))
                 Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                 RadioButton(
                     selected = volumeUnit == "gal",
                     onClick = { volumeUnit = "gal" }
                 )
-                Text("Gallons (gal)")
+                Text(stringResource(R.string.gallons))
             }
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -140,7 +142,7 @@ fun SettingsScreen(
                     containerColor = MaterialTheme.colorScheme.secondary
                 )
             ) {
-                Text("Switch / Add Vehicle")
+                Text(stringResource(R.string.switch_add_vehicle))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -160,7 +162,7 @@ fun SettingsScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
         }
     }

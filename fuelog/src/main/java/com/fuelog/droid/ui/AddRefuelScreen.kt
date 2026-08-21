@@ -41,6 +41,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.fuelog.droid.R
 import com.fuelog.droid.data.RefuelEntry
 import com.fuelog.droid.ui.components.AutoSelectTextField
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
@@ -100,10 +102,10 @@ fun AddRefuelScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (selectedEntry == null) "Add Refuel Record" else "Edit Refuel Record") },
+                title = { Text(if (selectedEntry == null) stringResource(R.string.add_refuel_title) else stringResource(R.string.edit_refuel_title)) },
                 navigationIcon = {
                     IconButton(onClick = handleBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -122,7 +124,7 @@ fun AddRefuelScreen(
                 AutoSelectTextField(
                     value = date,
                     onValueChange = { date = it },
-                    label = { Text("Date") },
+                    label = { Text(stringResource(R.string.date)) },
                     modifier = Modifier.fillMaxWidth(),
                     trailingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) }
                 )
@@ -131,17 +133,17 @@ fun AddRefuelScreen(
                 AutoSelectTextField(
                     value = vehicleDetails.plateNumber,
                     onValueChange = { },
-                    label = { Text("Vehicle Plate (from Settings)") },
+                    label = { Text(stringResource(R.string.vehicle_plate_settings)) },
                     modifier = Modifier.fillMaxWidth(),
                     readOnly = true,
                     enabled = false
                 )
 
                 // Fuel Type
-                DropdownField("Fuel Type", fuelType, fuelTypes) { fuelType = it }
+                DropdownField(stringResource(R.string.fuel_type), fuelType, fuelTypes) { fuelType = it }
 
                 // Trip Distance Type
-                Text("Trip Type", style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(R.string.trip_type), style = MaterialTheme.typography.labelLarge)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     tripTypes.forEach { type ->
                         RadioButton(
@@ -157,7 +159,7 @@ fun AddRefuelScreen(
                 AutoSelectTextField(
                     value = odometer,
                     onValueChange = { odometer = it },
-                    label = { Text("Odometer Reading ($distanceUnit)") },
+                    label = { Text(stringResource(R.string.odometer_reading, distanceUnit)) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
@@ -165,7 +167,7 @@ fun AddRefuelScreen(
                 AutoSelectTextField(
                     value = fuelConsumed,
                     onValueChange = { fuelConsumed = it },
-                    label = { Text("Fuel Consumed ($volumeUnit)") },
+                    label = { Text(stringResource(R.string.fuel_consumed, volumeUnit)) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
@@ -173,7 +175,7 @@ fun AddRefuelScreen(
                 AutoSelectTextField(
                     value = fuelPrice,
                     onValueChange = { fuelPrice = it },
-                    label = { Text("Fuel Price (៛/$volumeUnit)") },
+                    label = { Text(stringResource(R.string.fuel_price, volumeUnit)) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
@@ -182,7 +184,7 @@ fun AddRefuelScreen(
                 AutoSelectTextField(
                     value = stationName,
                     onValueChange = { stationName = it },
-                    label = { Text("Station Name") },
+                    label = { Text(stringResource(R.string.station_name)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -190,7 +192,7 @@ fun AddRefuelScreen(
                     AutoSelectTextField(
                         value = pickedAddress ?: "",
                         onValueChange = { },
-                        label = { Text("Location (Tap to select)") },
+                        label = { Text(stringResource(R.string.location_tap)) },
                         modifier = Modifier.fillMaxWidth(),
                         readOnly = true,
                         enabled = false
@@ -198,7 +200,7 @@ fun AddRefuelScreen(
                 }
 
                 // Payment Option
-                DropdownField("Payment Option", paymentOption, paymentOptions) {
+                DropdownField(stringResource(R.string.payment_option), paymentOption, paymentOptions) {
                     paymentOption = it
                 }
 
@@ -248,7 +250,7 @@ fun AddRefuelScreen(
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                     } else {
-                        Text(if (selectedEntry == null) "Save" else "Update")
+                        Text(if (selectedEntry == null) stringResource(R.string.save) else stringResource(R.string.update))
                     }
                 }
             }

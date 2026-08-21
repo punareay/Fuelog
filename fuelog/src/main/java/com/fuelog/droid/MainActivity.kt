@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.res.stringResource
 import com.fuelog.droid.data.RefuelRepository
 import com.fuelog.droid.data.SettingsManager
 import com.fuelog.droid.data.SheetsApiService
@@ -101,7 +102,19 @@ fun MainApp(viewModel: FuelViewModel) {
                                     contentDescription = null
                                 )
                             },
-                            label = { Text(screen.route.replaceFirstChar { it.uppercase() }) },
+                            label = {
+                                val labelRes = when (screen) {
+                                    Screen.Dashboard -> R.string.nav_dashboard
+                                    Screen.History -> R.string.nav_history
+                                    Screen.Settings -> R.string.nav_settings
+                                    else -> 0
+                                }
+                                if (labelRes != 0) {
+                                    Text(stringResource(labelRes))
+                                } else {
+                                    Text(screen.route.replaceFirstChar { it.uppercase() })
+                                }
+                            },
                             selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                             onClick = {
                                 navController.navigate(screen.route) {

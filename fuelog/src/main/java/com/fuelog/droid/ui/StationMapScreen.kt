@@ -14,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.compose.ui.res.stringResource
+import com.fuelog.droid.R
 import com.fuelog.droid.ui.components.formatRiel
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
 import com.google.android.gms.location.LocationServices
@@ -114,18 +116,18 @@ fun StationMapScreen(viewModel: FuelViewModel, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Station Map") },
+                title = { Text(stringResource(R.string.station_map_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 },
                 actions = {
                     IconButton(onClick = { zoomToCurrentLocation() }) {
-                        Icon(Icons.Default.MyLocation, contentDescription = "My Location")
+                        Icon(Icons.Default.MyLocation, contentDescription = stringResource(R.string.my_location))
                     }
                     IconButton(onClick = { zoomToAllPins() }) {
-                        Icon(Icons.Default.ZoomOutMap, contentDescription = "View All Pins")
+                        Icon(Icons.Default.ZoomOutMap, contentDescription = stringResource(R.string.view_all_pins))
                     }
                 }
             )
@@ -146,7 +148,11 @@ fun StationMapScreen(viewModel: FuelViewModel, onBack: () -> Unit) {
                 Marker(
                     state = MarkerState(position = position),
                     title = first.stationName.ifBlank { "Unknown Station" },
-                    snippet = "${stationEntries.size} refuels • Total: ${formatRiel(stationEntries.sumOf { it.totalCost })}"
+                    snippet = stringResource(
+                        R.string.refuels_count,
+                        stationEntries.size,
+                        formatRiel(stationEntries.sumOf { it.totalCost })
+                    )
                 )
             }
         }

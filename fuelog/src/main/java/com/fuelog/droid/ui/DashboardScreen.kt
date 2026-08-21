@@ -42,6 +42,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.fuelog.droid.R
 import com.fuelog.droid.ui.components.formatRiel
 import com.fuelog.droid.ui.viewmodel.FuelViewModel
 import com.fuelog.droid.ui.viewmodel.ReportFilter
@@ -65,7 +67,7 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Fuelog Dashboard") },
+                title = { Text(stringResource(R.string.dashboard_title)) },
                 actions = {
                     if (isLoading) {
                         CircularProgressIndicator(
@@ -76,7 +78,7 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
                         )
                     } else {
                         IconButton(onClick = { viewModel.refresh() }) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Sync")
+                            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.sync))
                         }
                     }
                 }
@@ -84,7 +86,7 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
-                Icon(Icons.Default.Add, contentDescription = "Add Record")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_record))
             }
         }
     ) { padding ->
@@ -111,14 +113,14 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = "Vehicle Identity",
+                        text = stringResource(R.string.vehicle_identity),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Plate: ${vehicleDetails.plateNumber.ifBlank { "N/A" }}")
-                    Text(text = "Model: ${vehicleDetails.model.ifBlank { "N/A" }}")
-                    Text(text = "Year: ${vehicleDetails.year.ifBlank { "N/A" }}")
+                    Text(text = stringResource(R.string.plate_label, vehicleDetails.plateNumber.ifBlank { "N/A" }))
+                    Text(text = stringResource(R.string.model_label, vehicleDetails.model.ifBlank { "N/A" }))
+                    Text(text = stringResource(R.string.year_label, vehicleDetails.year.ifBlank { "N/A" }))
                 }
             }
 
@@ -126,7 +128,7 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
 
             // Filter Section
             Text(
-                text = "Report Range",
+                text = stringResource(R.string.report_range),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.align(Alignment.Start)
             )
@@ -147,7 +149,16 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
                             }
                         },
                         label = {
-                            Text(filter.name.lowercase().replaceFirstChar { it.uppercase() })
+                            val labelRes = when (filter) {
+                                ReportFilter.ALL -> R.string.filter_all
+                                ReportFilter.WEEKLY -> R.string.filter_weekly
+                                ReportFilter.MONTHLY -> R.string.filter_monthly
+                                ReportFilter.QUARTERLY -> R.string.filter_quarterly
+                                ReportFilter.SEMESTER -> R.string.filter_semester
+                                ReportFilter.YEARLY -> R.string.filter_yearly
+                                ReportFilter.CUSTOM -> R.string.filter_custom
+                            }
+                            Text(stringResource(labelRes))
                         }
                     )
                 }
@@ -166,7 +177,7 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Total Fuel Expense",
+                text = stringResource(R.string.total_fuel_expense),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Normal
             )
@@ -179,7 +190,7 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Filtered Records: ${entries.size}",
+                text = stringResource(R.string.filtered_records, entries.size),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -202,18 +213,18 @@ fun DashboardScreen(viewModel: FuelViewModel, onAddClick: () -> Unit) {
                             }
                         }
                     ) {
-                        Text("Confirm")
+                        Text(stringResource(R.string.confirm))
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDateRangePicker = false }) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel))
                     }
                 }
             ) {
                 DateRangePicker(
                     state = dateRangePickerState,
-                    title = { Text("Select Date Range", modifier = Modifier.padding(16.dp)) },
+                    title = { Text(stringResource(R.string.select_date_range), modifier = Modifier.padding(16.dp)) },
                     modifier = Modifier.weight(1f)
                 )
             }
